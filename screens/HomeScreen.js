@@ -3,7 +3,7 @@ import { View, ScrollView, TouchableOpacity } from "react-native";
 import { Input, Text } from "react-native-elements";
 import { styles } from "../Styles";
 import { Ionicons, AntDesign, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { getData, storeData } from "../AsyncStorageFunctions";
+import { getData, storeData, clearAll } from "../AsyncStorageFunctions";
 
 const HomeScreen = ({ navigation }) => {
   const [showNewCategory, setShowNewCategory] = useState(false);
@@ -23,58 +23,63 @@ const HomeScreen = ({ navigation }) => {
     setShowNewCategory(false);
   };
 
-  getData().then((response) => {
-    console.log(response);
-  });
-
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.pageHeader}>
         <Text style={styles.h1text}>What'sAtHome</Text>
       </View>
+      {data === null && (
+        <View style={{ ...styles.pageContent, paddingTop: 15 }}>
+          <Text style={styles.semiBoldText}>Hi! Let's add some items</Text>
+        </View>
+      )}
       <ScrollView contentContainerStyle={styles.pageContent}>
-        {data &&
-          data.categories.map((category, i) => (
-            <View key={i} style={styles.categoryContent}>
-              <View style={styles.category}>
-                <View style={styles.categoryHeader}>
-                  <Text style={styles.categoryHeaderText}>{category.name}</Text>
-                  <View>
-                    <View style={styles.categoryHeaderIcons}>
-                      <TouchableOpacity
-                        onPress={() => navigation.replace("Category", { name: category.name, index: i, data: data })}
-                      >
-                        <AntDesign name="edit" size={28} color="black" />
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={{ marginLeft: 5 }}
-                        onPress={() => navigation.replace("Item", { index: i, item: defaultItem, data: data })}
-                      >
-                        <MaterialIcons name="playlist-add" size={28} color="black" />
-                      </TouchableOpacity>
-                    </View>
+        {data?.categories.map((category, i) => (
+          <View key={i} style={styles.categoryContent}>
+            <View style={styles.category}>
+              <View style={styles.categoryHeader}>
+                <Text style={styles.categoryHeaderText}>{category.name}</Text>
+                <View>
+                  <View style={styles.categoryHeaderIcons}>
+                    <TouchableOpacity
+                      onPress={() => navigation.replace("Category", { name: category.name, index: i, data: data })}
+                    >
+                      <AntDesign name="edit" size={28} color="black" />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{ marginLeft: 5 }}
+                      onPress={() => navigation.replace("Item", { index: i, item: defaultItem, data: data })}
+                    >
+                      <MaterialIcons name="playlist-add" size={28} color="black" />
+                    </TouchableOpacity>
                   </View>
                 </View>
               </View>
-              {category.list.map((item, j) => (
-                <TouchableOpacity
-                  key={j}
-                  style={styles.itemContent}
-                  onPress={() =>
-                    navigation.replace("Item", { index: i, item: data.categories[i].list[j], itemIndex: j, data: data })
-                  }
-                >
-                  <Text style={styles.itemNameText}>{item.itemName}</Text>
-                  <Text style={styles.itemDescriptionText}>{item.itemDescription}</Text>
-                </TouchableOpacity>
-              ))}
             </View>
-          ))}
+            {category.list.map((item, j) => (
+              <TouchableOpacity
+                key={j}
+                style={styles.itemContent}
+                onPress={() =>
+                  navigation.replace("Item", { index: i, item: data.categories[i].list[j], itemIndex: j, data: data })
+                }
+              >
+                <Text style={styles.itemNameText}>{item.itemName}</Text>
+                <Text style={styles.itemDescriptionText}>{item.itemDescription}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        ))}
         <TouchableOpacity onPress={() => setShowNewCategory(!showNewCategory)} style={{ marginTop: 15 }}>
-          <Ionicons name="add-circle-outline" size={34} color="black" />
+          {showNewCategory ? (
+            <MaterialIcons name="cancel-presentation" size={30} color="black" />
+          ) : (
+            <Ionicons name="add-circle-outline" size={34} color="black" />
+          )}
         </TouchableOpacity>
         {showNewCategory && (
           <View style={{ ...styles.categoryEdit, borderWidth: 0 }}>
+            <Text style={styles.semiBoldText}>New category:</Text>
             <View style={styles.categoryHeader}>
               <View style={{ width: "95%" }}>
                 <Input

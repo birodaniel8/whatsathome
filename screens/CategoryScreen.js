@@ -27,7 +27,7 @@ const CategoryScreen = ({ navigation, route }) => {
         </TouchableOpacity>
         <Text style={styles.h2text}>Edit category</Text>
         <TouchableOpacity>
-          <AntDesign name="delete" size={28} color="red" onPress={deleteCategory} />
+          <AntDesign name="delete" size={28} color="#FF0000" onPress={deleteCategory} />
         </TouchableOpacity>
       </View>
       <ScrollView contentContainerStyle={styles.pageContent}>

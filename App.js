@@ -3,12 +3,7 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import AppLoading from "expo-app-loading";
-import {
-  Montserrat_400Regular,
-  Montserrat_600SemiBold,
-  Montserrat_700Bold,
-  useFonts,
-} from "@expo-google-fonts/montserrat";
+import { Montserrat_400Regular, Montserrat_600SemiBold, useFonts } from "@expo-google-fonts/montserrat";
 
 import HomeScreen from "./screens/HomeScreen";
 import ItemScreen from "./screens/ItemScreen";
@@ -24,7 +19,6 @@ export default function App() {
   let [fontsLoaded] = useFonts({
     Montserrat_400Regular,
     Montserrat_600SemiBold,
-    Montserrat_700Bold,
   });
   if (!fontsLoaded) {
     return <AppLoading />;

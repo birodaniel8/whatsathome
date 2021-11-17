@@ -1,11 +1,12 @@
 import { StatusBar, StyleSheet } from "react-native";
 
 const shadowColor = "#000000";
-export const headerColor = "#3D1F90";
-export const underLineColor = "#908DFF";
+const headerColor = "#578E55";
+const underLineColor = "#B0D1AF";
+const itemContainerColor = "#F6F6F6";
+
 const defaultFont = "Montserrat_400Regular";
 const defaultSemiBoldFont = "Montserrat_600SemiBold";
-const defaultBoldFont = "Montserrat_700Bold";
 
 const shadowSettings = {
   shadowColor: shadowColor,
@@ -23,7 +24,6 @@ export const styles = StyleSheet.create({
     alignItems: "flex-end",
     width: "100%",
     flexDirection: "row",
-    // justifyContent: "center",
     backgroundColor: headerColor,
     height: StatusBar.currentHeight + 50,
   },
@@ -32,23 +32,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  h1text: {
-    fontSize: 24,
-    color: "white",
-    fontFamily: defaultSemiBoldFont,
-  },
-
-  h2text: {
-    fontSize: 18,
-    color: "white",
-    fontFamily: defaultSemiBoldFont,
-  },
-
-  semiBoldText: {
-    paddingLeft: 8,
-    fontFamily: defaultSemiBoldFont,
-  },
-
+  // Category:
   categoryContent: {
     alignItems: "center",
     width: "100%",
@@ -83,32 +67,23 @@ export const styles = StyleSheet.create({
     marginLeft: -15,
   },
 
-  itemEdit: {
-    width: "90%",
-    marginTop: 15,
-    marginBottom: 15,
-  },
-
+  // Item:
   itemContent: {
     flex: 1,
     height: 50,
     width: "85%",
     justifyContent: "center",
     ...shadowSettings,
-    backgroundColor: "white",
+    backgroundColor: itemContainerColor,
     marginTop: 10,
     paddingLeft: 10,
     borderRadius: 3,
   },
 
-  itemNameText: {
-    fontSize: 16,
-    fontFamily: defaultSemiBoldFont,
-  },
-
-  itemDescriptionText: {
-    fontSize: 14,
-    fontFamily: defaultFont,
+  itemEdit: {
+    width: "90%",
+    marginTop: 15,
+    marginBottom: 15,
   },
 
   inputField: {
@@ -120,5 +95,33 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     padding: 10,
     textAlignVertical: "top",
+  },
+
+  // Text:
+  h1text: {
+    fontSize: 24,
+    color: "white",
+    fontFamily: defaultSemiBoldFont,
+  },
+
+  h2text: {
+    fontSize: 18,
+    color: "white",
+    fontFamily: defaultSemiBoldFont,
+  },
+
+  semiBoldText: {
+    paddingLeft: 8,
+    fontFamily: defaultSemiBoldFont,
+  },
+
+  itemNameText: {
+    fontSize: 16,
+    fontFamily: defaultSemiBoldFont,
+  },
+
+  itemDescriptionText: {
+    fontSize: 14,
+    fontFamily: defaultFont,
   },
 });

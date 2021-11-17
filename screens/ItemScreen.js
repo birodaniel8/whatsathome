@@ -38,7 +38,7 @@ const ItemScreen = ({ navigation, route }) => {
         </TouchableOpacity>
         <Text style={styles.h2text}>{isNewItem ? "New item" : "Edit item"}</Text>
         <TouchableOpacity>
-          <AntDesign name="delete" size={28} color={isNewItem ? "#3D1F90" : "red"} onPress={deleteItem} />
+          <AntDesign name="delete" size={28} color={isNewItem ? "#578E55" : "red"} onPress={deleteItem} />
         </TouchableOpacity>
       </View>
       <ScrollView contentContainerStyle={styles.pageContent}>
