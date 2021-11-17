@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Image, View, ScrollView, TouchableOpacity } from "react-native";
-import { Avatar, Button, Input, Text } from "react-native-elements";
+import React, { useEffect, useState } from "react";
+import { View, ScrollView, TouchableOpacity } from "react-native";
+import { Button, Input, Text } from "react-native-elements";
 import { styles } from "../Styles";
-import { Ionicons, AntDesign } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons, AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import { getData, storeData, clearAll } from "../AsyncStorageFunctions";
 
 const HomeScreen = ({ navigation }) => {
   // const itemList = ["Item1", "Item2"]
@@ -11,46 +11,25 @@ const HomeScreen = ({ navigation }) => {
   const [newCategory, setNewCategory] = useState("");
   const [data, setData] = useState(null);
 
+  const defaultItem = { itemName: "", itemDescription: "", itemNote: "" };
+
   useEffect(() => {
-    getData().then(response => setData(response))
+    getData().then((response) => setData(response));
   }, []);
 
-  const storeData = async (value) => {
-    try {
-      const jsonValue = JSON.stringify(value)
-      await AsyncStorage.setItem('@storage_Key', jsonValue)
-    } catch (e) {
-      // saving error
-    }
-  }
-
-  const getData = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('@storage_Key')
-      return jsonValue != null ? JSON.parse(jsonValue) : null;
-    } catch (e) {
-      // error reading value
-    }
-  }
-
-  const clearAll = async () => {
-    try {
-      await AsyncStorage.clear()
-      setData(null)
-    } catch (e) {
-      // clear error
-    }
-
-    console.log('Done.')
-  }
-
+  // console.log(data);
 
   const addNewCategory = () => {
-    const newData = { ...data, [newCategory]: {} }
-    storeData(newData).then(() => setData(newData))
-  }
+    const newData = data ? { ...data } : { categories: [] };
+    newData.categories.push({ name: newCategory, list: [] });
+    storeData(newData).then(() => setData(newData));
+    setNewCategory("");
+    setShowNewCategory(false);
+  };
 
-  getData().then(response => { console.log(response) })
+  getData().then((response) => {
+    console.log(response);
+  });
 
   return (
     <View style={{ flex: 1 }}>
@@ -58,43 +37,70 @@ const HomeScreen = ({ navigation }) => {
         <Text style={styles.h1text}>What'sAtHome</Text>
       </View>
       <ScrollView contentContainerStyle={styles.pageContent}>
-        {data && Object.keys(data).map(category => (
-          <View style={styles.category} key={category}>
-            <View style={styles.categoryHeader}>
-              <Text style={styles.categoryHeaderText}>{category}</Text>
-              <View>
-                <View style={styles.categoryHeaderIcons}>
-                  <TouchableOpacity>
-                    <AntDesign name="edit" size={24} color="black" />
-                  </TouchableOpacity>
-                  <TouchableOpacity>
-                    <Ionicons name="add-circle-outline" size={24} color="black" />
-                  </TouchableOpacity>
+        {data &&
+          data.categories.map((category, i) => (
+            <View key={i} style={styles.categoryContent}>
+              <View style={styles.category}>
+                <View style={styles.categoryHeader}>
+                  <Text style={styles.categoryHeaderText}>{category.name}</Text>
+                  <View>
+                    <View style={styles.categoryHeaderIcons}>
+                      <TouchableOpacity
+                        onPress={() => navigation.replace("Category", { name: category.name, index: i, data: data })}
+                      >
+                        <AntDesign name="edit" size={24} color="black" />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.replace("Item", { name: category.name, index: i, item: defaultItem, data: data })
+                        }
+                      >
+                        <Ionicons name="add-circle-outline" size={24} color="black" />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
                 </View>
               </View>
+              {category.list.map((item, j) => (
+                <TouchableOpacity key={j} style={styles.itemContent}>
+                  <Text style={styles.itemNameText}>{item.name}</Text>
+                  <Text style={styles.itemDescriptionText}>{item.description}</Text>
+                </TouchableOpacity>
+              ))}
             </View>
-          </View>
-        ))}
-        {/* {data && Object.keys(data).map(item => (
-          <TouchableOpacity key={item} onPress={() => navigation.replace("Item", { itemName: item })}>
-            <View style={styles.item}>
-              <Text>{item}</Text>
-            </View>
-          </TouchableOpacity>
-        ))} */}
-        <TouchableOpacity onPress={() => setShowNewCategory(!showNewCategory)}>
-          <Ionicons name="add-circle-outline" size={24} color="black" />
+          ))}
+        <TouchableOpacity onPress={() => setShowNewCategory(!showNewCategory)} style={{ marginTop: 15 }}>
+          <Ionicons name="add-circle-outline" size={30} color="black" />
         </TouchableOpacity>
         {showNewCategory && (
-          <View>
-            <Input value={newCategory} onChangeText={(text) => setNewCategory(text)} inputContainerStyle={{ width: "100%" }} />
-            <Button title="Add new category" onPress={addNewCategory} />
+          <View style={{ ...styles.categoryEdit, borderWidth: 0 }}>
+            <View style={styles.categoryHeader}>
+              <View style={{ width: "95%" }}>
+                <Input
+                  value={newCategory}
+                  onChangeText={(text) => setNewCategory(text)}
+                  inputContainerStyle={styles.inputField}
+                />
+              </View>
+              <TouchableOpacity style={{ paddingTop: 8 }}>
+                <MaterialCommunityIcons name="send" size={24} color="black" onPress={addNewCategory} />
+              </TouchableOpacity>
+            </View>
           </View>
         )}
-        <Button title="Clear all" onPress={clearAll} />
+
+        <View style={{ marginTop: 50 }}>
+          <Button
+            title="Clear all"
+            onPress={() => {
+              clearAll();
+              setData(null);
+            }}
+          />
+        </View>
       </ScrollView>
     </View>
-  )
-}
+  );
+};
 
-export default HomeScreen
+export default HomeScreen;

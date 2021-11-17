@@ -1,8 +1,8 @@
 import { StatusBar, StyleSheet } from "react-native";
 
 const shadowColor = "#000000";
-const headerColor = "#3D1F90";
-const underLineColor = "#908DFF"
+export const headerColor = "#3D1F90";
+export const underLineColor = "#908DFF";
 const defaultFont = "Montserrat_400Regular";
 const defaultSemiBoldFont = "Montserrat_600SemiBold";
 const defaultBoldFont = "Montserrat_700Bold";
@@ -17,14 +17,15 @@ const shadowSettings = {
 export const styles = StyleSheet.create({
   pageHeader: {
     paddingTop: StatusBar.currentHeight + 10,
-    paddingHorizontal: 15,
     paddingBottom: 10,
+    paddingHorizontal: 15,
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-end",
     width: "100%",
     flexDirection: "row",
-    justifyContent: "center",
+    // justifyContent: "center",
     backgroundColor: headerColor,
+    height: StatusBar.currentHeight + 50,
   },
 
   pageContent: {
@@ -37,6 +38,22 @@ export const styles = StyleSheet.create({
     fontFamily: defaultSemiBoldFont,
   },
 
+  h2text: {
+    fontSize: 18,
+    color: "white",
+    fontFamily: defaultSemiBoldFont,
+  },
+
+  semiBoldText: {
+    paddingLeft: 8,
+    fontFamily: defaultSemiBoldFont,
+  },
+
+  categoryContent: {
+    alignItems: "center",
+    width: "100%",
+  },
+
   categoryHeader: {
     flex: 1,
     flexDirection: "row",
@@ -45,13 +62,12 @@ export const styles = StyleSheet.create({
 
   categoryHeaderIcons: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
 
   categoryHeaderText: {
     fontSize: 16,
     fontFamily: defaultSemiBoldFont,
-
   },
 
   category: {
@@ -61,14 +77,43 @@ export const styles = StyleSheet.create({
     borderBottomColor: underLineColor,
   },
 
-  item: {
+  categoryEdit: {
+    width: "90%",
+    marginTop: 15,
+    marginLeft: -15,
+  },
+
+  itemEdit: {
+    width: "90%",
+    marginTop: 15,
+    marginBottom: 15,
+  },
+
+  itemContent: {
+    flex: 1,
     height: 50,
-    width: "100%",
-    // ...shadowSettings,
-    marginBottom: 10,
+    width: "85%",
+    justifyContent: "center",
+    ...shadowSettings,
+    backgroundColor: "white",
+    marginTop: 10,
     paddingLeft: 10,
-    borderRadius: 2,
-    borderWidth: 1,
-    alignItems: "center"
-  }
-})
+    borderRadius: 3,
+    // borderWidth: 1,
+  },
+
+  itemNameText: {
+    fontSize: 14,
+    fontFamily: defaultSemiBoldFont,
+  },
+
+  itemDescriptionText: {
+    fontSize: 14,
+    fontFamily: defaultFont,
+  },
+
+  inputField: {
+    borderColor: underLineColor,
+    width: "100%",
+  },
+});
