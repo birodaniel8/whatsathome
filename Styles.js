@@ -66,7 +66,7 @@ export const styles = StyleSheet.create({
   },
 
   categoryHeaderText: {
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: defaultSemiBoldFont,
   },
 
@@ -99,11 +99,10 @@ export const styles = StyleSheet.create({
     marginTop: 10,
     paddingLeft: 10,
     borderRadius: 3,
-    // borderWidth: 1,
   },
 
   itemNameText: {
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: defaultSemiBoldFont,
   },
 
@@ -115,5 +114,11 @@ export const styles = StyleSheet.create({
   inputField: {
     borderColor: underLineColor,
     width: "100%",
+  },
+
+  multiLineInputField: {
+    fontSize: 20,
+    padding: 10,
+    textAlignVertical: "top",
   },
 });

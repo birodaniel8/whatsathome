@@ -23,11 +23,11 @@ const CategoryScreen = ({ navigation, route }) => {
     <View style={{ flex: 1 }}>
       <View style={styles.pageHeader}>
         <TouchableOpacity onPress={() => navigation.replace("Home")}>
-          <Ionicons name="arrow-back-circle-outline" size={24} color="white" />
+          <Ionicons name="arrow-back-circle-outline" size={28} color="white" />
         </TouchableOpacity>
         <Text style={styles.h2text}>Edit category</Text>
         <TouchableOpacity>
-          <AntDesign name="delete" size={24} color="red" onPress={deleteCategory} />
+          <AntDesign name="delete" size={28} color="red" onPress={deleteCategory} />
         </TouchableOpacity>
       </View>
       <ScrollView contentContainerStyle={styles.pageContent}>
@@ -41,7 +41,7 @@ const CategoryScreen = ({ navigation, route }) => {
               />
             </View>
             <TouchableOpacity style={{ paddingTop: 8 }}>
-              <MaterialCommunityIcons name="send" size={24} color="black" onPress={updateCategory} />
+              <MaterialCommunityIcons name="send" size={26} color="black" onPress={updateCategory} />
             </TouchableOpacity>
           </View>
         </View>
