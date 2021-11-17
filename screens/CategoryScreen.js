@@ -10,7 +10,7 @@ const CategoryScreen = ({ navigation, route }) => {
   const [categoryName, setCategoryName] = useState(name);
 
   const updateCategory = () => {
-    data.categories[index].name = categoryName;
+    data.categories[index].name = categoryName.trim();
     storeData(data).then(() => navigation.replace("Home"));
   };
 

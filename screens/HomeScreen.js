@@ -17,7 +17,7 @@ const HomeScreen = ({ navigation }) => {
 
   const addNewCategory = () => {
     const newData = data ? { ...data } : { categories: [] };
-    newData.categories.push({ name: newCategory, list: [] });
+    newData.categories.push({ name: newCategory.trim(), list: [] });
     storeData(newData).then(() => setData(newData));
     setNewCategory("");
     setShowNewCategory(false);

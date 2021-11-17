@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, ScrollView, TouchableOpacity, TextInput } from "react-native";
+import { View, ScrollView, TouchableOpacity, TextInput, Alert } from "react-native";
 import { Text, Input } from "react-native-elements";
 import { styles } from "../Styles";
 import { Ionicons, AntDesign, FontAwesome5, MaterialIcons } from "@expo/vector-icons";
@@ -21,13 +21,21 @@ const ItemScreen = ({ navigation, route }) => {
   };
 
   const updateItem = () => {
-    const newItem = { itemName: newItemName, itemDescription: newItemDescription, itemNote: newItemNote };
-    if (!isNewItem) {
-      data.categories[index].list[itemIndex] = newItem;
+    if (newItemName.trim().length > 0) {
+      const newItem = {
+        itemName: newItemName.trim(),
+        itemDescription: newItemDescription.trim(),
+        itemNote: newItemNote,
+      };
+      if (!isNewItem) {
+        data.categories[index].list[itemIndex] = newItem;
+      } else {
+        data.categories[index].list.push(newItem);
+      }
+      storeData(data).then(() => navigation.replace("Home"));
     } else {
-      data.categories[index].list.push(newItem);
+      Alert.alert("Error", "The item's name should not be empty");
     }
-    storeData(data).then(() => navigation.replace("Home"));
   };
 
   return (
@@ -46,6 +54,7 @@ const ItemScreen = ({ navigation, route }) => {
           <Text style={styles.semiBoldText}>Name:</Text>
           <Input
             value={newItemName}
+            type="text"
             placeholder="Item name"
             onChangeText={(text) => setNewItemName(text)}
             inputContainerStyle={styles.inputField}
@@ -53,6 +62,7 @@ const ItemScreen = ({ navigation, route }) => {
           <Text style={styles.semiBoldText}>Description:</Text>
           <Input
             value={newItemDescription}
+            type="text"
             placeholder="Item description"
             onChangeText={(text) => setNewItemDescription(text)}
             inputContainerStyle={styles.inputField}
@@ -60,6 +70,7 @@ const ItemScreen = ({ navigation, route }) => {
           <Text style={styles.semiBoldText}>Notes:</Text>
           <TextInput
             value={newItemNote}
+            type="text"
             placeholder="Add notes"
             onChangeText={(text) => setNewItemNote(text)}
             multiline
