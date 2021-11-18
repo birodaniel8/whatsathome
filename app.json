@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "whatsathome",
-    "slug": "whatsathome",
+    "name": "What'sAtHome",
+    "slug": "whats-at-home",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,10 +20,12 @@
       "supportsTablet": true
     },
     "android": {
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.birodaniel8.whats_at_home"
     },
     "web": {
       "favicon": "./assets/favicon.png"
